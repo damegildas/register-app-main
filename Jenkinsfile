@@ -4,6 +4,15 @@ pipeline {
         jdk 'Java17.0.11'
         maven 'Maven3'
     }
+    environment {
+	    APP_NAME = "register-app-pipeline"
+            RELEASE = "1.0.0"
+            DOCKER_USER = "yakogi"
+            DOCKER_PASS = 'dockerhu'
+            IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
+            IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
+	    JENKINS_API_TOKEN = credentials("JENKINS_API_TOKEN")
+    }
     stages{
         stage("Cleanup Workspace"){
                 steps {
@@ -13,7 +22,7 @@ pipeline {
 
         stage("Checkout from SCM"){
                 steps {
-                    git branch: 'main', credentialsId: 'github', url: 'https://github.com/Ashfaque-9x/register-app'
+                    git branch: 'main', credentialsId: 'github', url: 'https://github.com/damegildas/register-app-main'
                 }
         }
 
